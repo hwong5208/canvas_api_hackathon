@@ -29,11 +29,6 @@ auth_header = {'Authorization': 'Bearer ' + token} # setup the authorization hea
 def send_sms( content ,phone_to=twilio_phone_to, phone_from=twilio_phone_from):
     client = Client(twilio_account_sid, twilio_auth_token)
 
-    # message = client.messages.create(
-    #     to="+17787126686",
-    #     from_="+17786440746",
-    #     body="Hello from Python!")
-
     message = client.messages.create(
         to= phone_to,
         from_=phone_from,
