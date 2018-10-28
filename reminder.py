@@ -5,6 +5,7 @@ import requests
 import pandas as pd
 
 
+
 def get_config_setting():
     with open('asset/config.json', 'r') as f:
         config = json.load(f)
@@ -112,8 +113,22 @@ def get_user_email(url= BASE_URL):
     return email
 
 
-get_assignment()
-#
+#get_assignment()
+
 # get_user_email()
 
 #send_sms("Hello from here!!")
+
+
+
+
+
+# app = Flask("__name___")
+#
+# @app.route('/')
+# def index():
+#     send_sms("Hello from here!!")
+#     return "Hello World!"
+#
+# app.run(debug=True,port=8000,host='0.0.0.0')
+#
