@@ -34,6 +34,18 @@ def send_sms( content ,phone_to=twilio_phone_to, phone_from=twilio_phone_from):
     return
 
 
+def send_whatsapp( content ,phone_to=twilio_phone_to, phone_from=twilio_phone_from):
+    client = Client(twilio_account_sid, twilio_auth_token)
+
+    message = client.messages.create(
+        to= "whatsapp:+17787126686",
+        from_="whatsapp:+17786440746",
+        body= content)
+
+    print(message.sid)
+    return
+
+
 def hours_minutes(duration):
     totsec = duration.total_seconds()
     h = totsec // 3600
