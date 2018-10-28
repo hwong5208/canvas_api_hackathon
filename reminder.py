@@ -1,16 +1,20 @@
 import json
 from datetime import datetime, timedelta
-
+from twilio.rest import Client
 import requests
 import pandas as pd
 
 
-def get_token_and_base_url():
+def get_config_setting():
     with open('asset/config.json', 'r') as f:
         config = json.load(f)
-        access_token = config["access_token"]
+        access_token = config['access_token']
         BASE_URL = config['BASE_URL']
-    return access_token, BASE_URL
+        twilio_account_sid = config['twilio_account_sid']
+        twilio_auth_token = config['twilio_auth_token']
+        twilio_phone_to = config['twilio_phone_to']
+        twilio_phone_from = config['twilio_phone_from']
+    return access_token, BASE_URL,twilio_account_sid,twilio_auth_token,twilio_phone_to,twilio_phone_from
 
 
 # BASE_URL = 'https://canvas.ubc.ca'
@@ -18,8 +22,25 @@ def get_token_and_base_url():
 
 
 
-token, BASE_URL = get_token_and_base_url()
+token, BASE_URL,twilio_account_sid,twilio_auth_token,twilio_phone_to,twilio_phone_from = get_config_setting()
 auth_header = {'Authorization': 'Bearer ' + token} # setup the authorization header to be used later
+
+
+def send_sms( content ,phone_to=twilio_phone_to, phone_from=twilio_phone_from):
+    client = Client(twilio_account_sid, twilio_auth_token)
+
+    # message = client.messages.create(
+    #     to="+17787126686",
+    #     from_="+17786440746",
+    #     body="Hello from Python!")
+
+    message = client.messages.create(
+        to= phone_to,
+        from_=phone_from,
+        body= content)
+
+    print(message.sid)
+    return
 
 
 def hours_minutes(duration):
@@ -97,7 +118,8 @@ def get_user_email(url= BASE_URL):
             #print("user: ", data["primary_email"])
     return email
 
-get_assignment()
+# get_assignment()
+#
+# get_user_email()
 
-get_user_email()
-
+send_sms("Hello from here!!")
